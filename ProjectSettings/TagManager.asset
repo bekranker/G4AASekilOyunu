@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Line
+  - CorrectAngleEffect
+  - UnderLine
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Line
+  - LineSprite
+  - ParticleCollector
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Foreground
+    uniqueID: 3020198219
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: LineSprite
+    uniqueID: 1766672359
+    locked: 0
+  - name: CameraSortingLayer
+    uniqueID: 3824460985
+    locked: 0
+  - name: GUI-Canvas
+    uniqueID: 3264106287
+    locked: 0
