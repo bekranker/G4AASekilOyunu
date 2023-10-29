@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Buttons
   m_Shader: {fileID: -6465566751694194690, guid: 87608df2578a2cc47814996d519e5371, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 2
@@ -17,6 +19,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -46,14 +49,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Float: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RippleCount: 0.015
     - _RippleSpeed: 0.5
     - _RippleStrength: 0.476
+    - _Speed: 0.2
     m_Colors:
     - _Color_1: {r: 0.65882355, g: 0.79607844, b: 0.89411765, a: 1}
     - _Color_2: {r: 0.654902, g: 0.89411765, b: 0.6784314, a: 1}
+    - _NextLevelEffectPosition: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _Position: {r: -0.55, g: -0.64, b: 0, a: 0}
     - _RipplePosition: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
@@ -69,4 +75,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 5
+  version: 7
