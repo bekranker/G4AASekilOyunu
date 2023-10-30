@@ -13,9 +13,18 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Texture2D Puzzle_Sprite;
     public List<Sprite> Puzzle_Sprites = new();
     [SerializeField] private Vector2Int Level_Size;
+
+    [Space(15)]
+    [Header("-----Level Props")]
+    [Space(15)]
+    public GameObject Parent;
+
     public void CreateLevel()
     {
         print("Level Creating");
+
+        Parent.name = "Level" + Level.ToString();
+
         var spriteSizeX = Puzzle_Sprite.width / Level_Size.x;
         var spriteSizeY =  Puzzle_Sprite.height / Level_Size.y;
         FolderCreator.CreateEmptyFolder(Level.ToString());
@@ -28,12 +37,15 @@ public class LevelGenerator : MonoBehaviour
                 var sprite = Sprite.Create(Puzzle_Sprite, rect, Vector2.one * 0.5f, TexturePixelPerUnit);
                 AssetDatabase.CreateAsset(sprite, $"Assets/Levels/Level{Level}/Photo{x}{y}.asset");
                 Puzzle_Sprites.Add(sprite);
+                
             }
         }
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
 }
+
+
 [CustomEditor(typeof(LevelGenerator))]
 public class LevelGeneratorEditor : Editor
 {
@@ -46,6 +58,5 @@ public class LevelGeneratorEditor : Editor
             LevelGenerator levelGenerator = (LevelGenerator)target;
             levelGenerator.CreateLevel();
         }
-        
     }
 }
