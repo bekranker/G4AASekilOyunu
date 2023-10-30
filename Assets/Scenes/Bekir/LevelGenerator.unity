@@ -531,7 +531,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1069392569}
   m_Layer: 0
-  m_Name: Level2
+  m_Name: Level3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -680,7 +680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7232a4974117f6e4f9f9448256e4481b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: 2
+  Level: 3
   TexturePixelPerUnit: 200
   Puzzle_Sprite: {fileID: 2800000, guid: 38b345b8a98080045b7c344040d3d215, type: 3}
   Puzzle_Sprites:
@@ -690,7 +690,16 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a7c3af41fb4309e4dbaf0c4dffdb61f1, type: 2}
   - {fileID: 21300000, guid: 47f04e8fec8b15148a1bd44c9b6de98f, type: 2}
   - {fileID: 21300000, guid: c518df04e7a97b14b82f089906032642, type: 2}
-  Level_Size: {x: 3, y: 2}
+  - {fileID: 21300000, guid: 3c7ff8fa017681f4088bd531706d3570, type: 2}
+  - {fileID: 21300000, guid: 205394baf9325e84caab2d3cf4f55e0f, type: 2}
+  - {fileID: 21300000, guid: d99ab13bdc0ac13408d279c669a43cf0, type: 2}
+  - {fileID: 21300000, guid: c46bbf598451b32489f27ee38a9b9ef1, type: 2}
+  - {fileID: 21300000, guid: 35576afcb72d80542a1320a600023d73, type: 2}
+  - {fileID: 21300000, guid: f1ce0e71ab8b9a444b2578c41ca52d3e, type: 2}
+  - {fileID: 21300000, guid: 4e26f038d9d9f694ca0724cbaebca5d6, type: 2}
+  - {fileID: 21300000, guid: 5bf40d6fdca73924ab02c03d280e069f, type: 2}
+  - {fileID: 21300000, guid: 6ab4717ea2e00db4c82781de321e7fbf, type: 2}
+  Level_Size: {x: 3, y: 3}
   Parent: {fileID: 1069392568}
 --- !u!1 &1954060843
 GameObject:
