@@ -49,18 +49,19 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _DotsSpeed: 1
     - _Float: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RippleCount: 0.015
     - _RippleSpeed: 0.5
     - _RippleStrength: 0.476
-    - _Speed: 0.2
+    - _Speed: 0.463
     m_Colors:
-    - _Color_1: {r: 0.75, g: 0.7731482, b: 1, a: 1}
-    - _Color_2: {r: 1, g: 0.75, b: 0.90730333, a: 1}
+    - _Color_1: {r: 0.0481043, g: 0.21698111, b: 0.069213904, a: 1}
+    - _Color_2: {r: 0.17832485, g: 0.4716981, b: 0.13127448, a: 1}
     - _NextLevelEffectPosition: {r: 0.5, g: 0.5, b: 0, a: 0}
-    - _Position: {r: -0.06, g: -0.3, b: 0, a: 0}
+    - _Position: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _RipplePosition: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &131692356806594733

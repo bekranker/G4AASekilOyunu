@@ -10,7 +10,6 @@ public class Piece : MonoBehaviour
     public List<Vector3> Angles = new();
     public int Index;
     private ClickManager _clickManager;
-
     private Transform _t;
 
     private void Start(){

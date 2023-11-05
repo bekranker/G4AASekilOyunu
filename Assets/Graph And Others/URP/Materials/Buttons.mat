@@ -49,6 +49,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _DotsSpeed: 1
     - _Float: 1
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -57,8 +58,8 @@ Material:
     - _RippleStrength: 0.476
     - _Speed: 0.2
     m_Colors:
-    - _Color_1: {r: 0.65882355, g: 0.79607844, b: 0.89411765, a: 1}
-    - _Color_2: {r: 0.654902, g: 0.89411765, b: 0.6784314, a: 1}
+    - _Color_1: {r: 1, g: 0.31106392, b: 0, a: 1}
+    - _Color_2: {r: 0.40939838, g: 0.754717, b: 0.4433641, a: 1}
     - _NextLevelEffectPosition: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _Position: {r: -0.55, g: -0.64, b: 0, a: 0}
     - _RipplePosition: {r: 0, g: 0, b: 0, a: 0}
