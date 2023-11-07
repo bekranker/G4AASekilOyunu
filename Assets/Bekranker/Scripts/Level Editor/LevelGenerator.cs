@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using DG.Tweening;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class LevelGenerator : MonoBehaviour
     [Header("-----Level Objects")]
     [Space(15)]
     [SerializeField] private GameObject _Parent;
-
+    [SerializeField] List<string> hexs;
     private Color _firstColor, _secondColor;
     private string _firstHex, _secondHex;
 
@@ -39,20 +40,37 @@ public class LevelGenerator : MonoBehaviour
                 piece.name = "Piece" + x + y;
                 piece.transform.SetParent(_Parent.transform);
                 piece.transform.tag = "Line";
-                piece.transform.position = new Vector3((sideSize * x - unitPer2) - (unitPer2 / _Level_Size.x), sideSize * y - unitPer2);
+                piece.transform.position = new Vector3((sideSize * x - unitPer2), (sideSize * y - unitPer2));
                 var rect = new Rect(x * spriteSizeX, y * spriteSizeY, spriteSizeX, spriteSizeY);
                 var sprite = Sprite.Create(_Puzzle_Sprite, rect, Vector2.one * 0.5f, _TexturePixelPerUnit);
                 piece.AddComponent<SpriteRenderer>().sprite = sprite;
                 AssetDatabase.CreateAsset(sprite, $"Assets/Levels/Level{_Level}/Photo{x}{y}.asset");
             }
         }
+        SettingLevelColor();
+        string hexOne = "#";
+        string hexTwo = "#";
+        for (int i = 0; i < 6; i++)
+        {
+            hexOne += hexs[_Level][i];
+        }
+        for (int i = 7; i < 14; i++)
+        {
+            
+        }
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
+    }
+    public void SettingLevelColor()
+    {
+        string colorPath = "Assets/COLORS.txt";
+        hexs = GetTXT.GetTexts(colorPath);
     }
 
     public void ResetLevel(){
         List<GameObject> _pieces_ = GameObject.FindGameObjectsWithTag("Line").ToList();
         _pieces_?.ForEach((__piece__)=>{DestroyImmediate(__piece__);});
+        hexs.Clear();
     }
 }
 
