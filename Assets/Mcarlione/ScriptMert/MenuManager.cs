@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
-using JetBrains.Annotations;
-
+using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private RectTransform _Title;
@@ -20,6 +19,7 @@ public class MenuManager : MonoBehaviour
     }
     public void SwitchScene()
     {
+        SceneManager.LoadScene("LevelSelection");
         _ClickToStartAnimation.SetTrigger("SwitchScene");
         _Title.DOLocalMove(new Vector2(_Title.position.x,_ExitLocation.x),_Duration.y);
         _Settings.DOLocalMove(new Vector2(_Title.position.x,_ExitLocation.y),_Duration.y);
