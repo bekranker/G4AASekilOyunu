@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEditor;
 using System.Linq;
 
-
 public class LevelGenerator : MonoBehaviour
 {
     [Space(15)]

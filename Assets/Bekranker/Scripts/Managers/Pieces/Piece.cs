@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 
 public class Piece : MonoBehaviour
@@ -22,7 +21,7 @@ public class Piece : MonoBehaviour
 
     public void TurnMe(){
         Index = (Index + 1 < Angles.Count) ? Index + 1 : 0; 
-        _t.DORotate(Angles[Index], _clickManager.Speed).SetUpdate(true);
+        //_t.DORotate(Angles[Index], _clickManager.Speed).SetUpdate(true);
         TurnAction?.Invoke();
     }
 }
