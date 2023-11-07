@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using Unity.Mathematics;
+using System.Linq;
 
 
 public class LevelGenerator : MonoBehaviour
@@ -13,7 +13,6 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private int _Level;
     [SerializeField] private int _TexturePixelPerUnit;
     [SerializeField] private Texture2D _Puzzle_Sprite;
-    public List<Sprite> Puzzle_Sprites = new();
     [SerializeField] private Vector2Int _Level_Size;
 
 
@@ -32,25 +31,31 @@ public class LevelGenerator : MonoBehaviour
         Parent.name = "Level" + _Level.ToString();
         var spriteSizeX = _Puzzle_Sprite.width / _Level_Size.x;
         var spriteSizeY =  _Puzzle_Sprite.height / _Level_Size.y;
+        var sideSize = 5.1145f / _Level_Size.x;
+        var unitPer2 = sideSize / 2;
         FolderCreator.CreateEmptyFolder(_Level.ToString());
         AssetDatabase.Refresh();
         for (int y = 0; y < _Level_Size.y; y++)
         {
             for (int x = 0; x < _Level_Size.x; x++)
             {
-                //GameObject piece = new GameObject();
-                //piece.name = "Piece" + x + y;
+                GameObject piece = new GameObject();
+                piece.name = "Piece" + x + y;
+                piece.transform.tag = "Line";
+                piece.transform.position = new Vector3(sideSize * x - unitPer2, sideSize * y - unitPer2);
                 var rect = new Rect(x * spriteSizeX, y * spriteSizeY, spriteSizeX, spriteSizeY);
                 var sprite = Sprite.Create(_Puzzle_Sprite, rect, Vector2.one * 0.5f, _TexturePixelPerUnit);
-                //piece.AddComponent<SpriteRenderer>().sprite = sprite;
+                piece.AddComponent<SpriteRenderer>().sprite = sprite;
                 AssetDatabase.CreateAsset(sprite, $"Assets/Levels/Level{_Level}/Photo{x}{y}.asset");
-                Puzzle_Sprites.Add(sprite);
-
-                //piece.transform.position = new Vector3(x *_Level_Size.x,y*_Level_Size.x);
             }
         }
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
+    }
+
+    public void ResetLevel(){
+        List<GameObject> _pieces_ = GameObject.FindGameObjectsWithTag("Line").ToList();
+        _pieces_?.ForEach((__piece__)=>{DestroyImmediate(__piece__);});
     }
 }
 
@@ -65,6 +70,11 @@ public class LevelGeneratorEditor : Editor
         {
             LevelGenerator levelGenerator = (LevelGenerator)target;
             levelGenerator.CreateLevel();
+        }
+        if(GUILayout.Button("Reset"))
+        {
+            LevelGenerator levelGenerator = (LevelGenerator)target;
+            levelGenerator.ResetLevel();
         }
     }
 }
