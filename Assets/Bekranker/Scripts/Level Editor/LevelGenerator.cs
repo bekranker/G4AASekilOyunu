@@ -19,9 +19,13 @@ public class LevelGenerator : MonoBehaviour
     [Header("-----Level Objects")]
     [Space(15)]
     [SerializeField] private GameObject _Parent;
-    [SerializeField] List<string> hexs;
+    [SerializeField] private List<string> _Hexs;
+    [SerializeField] private Material _BackgroundMaterial;
+    
     private Color _firstColor, _secondColor;
     private string _firstHex, _secondHex;
+    private static int _backgroundColorOne = Shader.PropertyToID("_RingSpawnPosition");
+    private static int _backgroundColorTwo = Shader.PropertyToID("_RingSpawnPosition");
 
     public void CreateLevel()
     {
@@ -52,25 +56,35 @@ public class LevelGenerator : MonoBehaviour
         string hexTwo = "#";
         for (int i = 0; i < 6; i++)
         {
-            hexOne += hexs[_Level][i];
+            hexOne += _Hexs[_Level][i];
         }
-        for (int i = 7; i < 14; i++)
+        for (int i = 7; i < 13; i++)
         {
-            
+            hexTwo += _Hexs[_Level][i];
+            print(_Hexs[_Level][i]);
         }
+        if (ColorUtility.TryParseHtmlString(hexOne, out _firstColor))
+        {
+            print("Parsed: " + hexOne);
+        }
+        if (ColorUtility.TryParseHtmlString(hexOne, out _secondColor))
+        {
+            print("Parsed: " + hexTwo);
+        }
+        print(hexOne + " - " + hexTwo);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
     public void SettingLevelColor()
     {
         string colorPath = "Assets/COLORS.txt";
-        hexs = GetTXT.GetTexts(colorPath);
+        _Hexs = GetTXT.GetTexts(colorPath);
     }
 
     public void ResetLevel(){
         List<GameObject> _pieces_ = GameObject.FindGameObjectsWithTag("Line").ToList();
         _pieces_?.ForEach((__piece__)=>{DestroyImmediate(__piece__);});
-        hexs.Clear();
+        _Hexs.Clear();
     }
 }
 
