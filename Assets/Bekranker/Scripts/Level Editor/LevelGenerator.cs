@@ -20,9 +20,11 @@ public class LevelGenerator : MonoBehaviour
     [Space(15)]
     [SerializeField] private GameObject _Parent;
 
+    private Color _firstColor, _secondColor;
+    private string _firstHex, _secondHex;
+
     public void CreateLevel()
     {
-        print("Level Creating");
         _Parent.name = "Level" + _Level.ToString();
         var spriteSizeX = _Puzzle_Sprite.width / _Level_Size.x;
         var spriteSizeY =  _Puzzle_Sprite.height / _Level_Size.y;
