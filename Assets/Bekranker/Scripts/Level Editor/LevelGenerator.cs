@@ -15,11 +15,6 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Texture2D _Puzzle_Sprite;
     [SerializeField] private Vector2Int _Level_Size;
 
-
-    [Space(15)]
-    [Header("-----Level Props")]
-    [Space(15)]
-    public GameObject Parent;
     [Space(15)]
     [Header("-----Level Objects")]
     [Space(15)]
@@ -28,7 +23,7 @@ public class LevelGenerator : MonoBehaviour
     public void CreateLevel()
     {
         print("Level Creating");
-        Parent.name = "Level" + _Level.ToString();
+        _Parent.name = "Level" + _Level.ToString();
         var spriteSizeX = _Puzzle_Sprite.width / _Level_Size.x;
         var spriteSizeY =  _Puzzle_Sprite.height / _Level_Size.y;
         var sideSize = 5.1145f / _Level_Size.x;
@@ -41,8 +36,9 @@ public class LevelGenerator : MonoBehaviour
             {
                 GameObject piece = new GameObject();
                 piece.name = "Piece" + x + y;
+                piece.transform.SetParent(_Parent.transform);
                 piece.transform.tag = "Line";
-                piece.transform.position = new Vector3(sideSize * x - unitPer2, sideSize * y - unitPer2);
+                piece.transform.position = new Vector3((sideSize * x - unitPer2) - (unitPer2 / _Level_Size.x), sideSize * y - unitPer2);
                 var rect = new Rect(x * spriteSizeX, y * spriteSizeY, spriteSizeX, spriteSizeY);
                 var sprite = Sprite.Create(_Puzzle_Sprite, rect, Vector2.one * 0.5f, _TexturePixelPerUnit);
                 piece.AddComponent<SpriteRenderer>().sprite = sprite;
