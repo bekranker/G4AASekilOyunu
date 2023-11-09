@@ -58,8 +58,8 @@ Material:
     - _RippleStrength: 0.476
     - _Speed: 0.463
     m_Colors:
-    - _Color_1: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
-    - _Color_2: {r: 0.23529412, g: 0.18039216, b: 0.44705883, a: 1}
+    - _Color_1: {r: 0.06666667, g: 0.06666667, b: 0.06666667, a: 1}
+    - _Color_2: {r: 0.06666667, g: 0.06666667, b: 0.06666667, a: 1}
     - _NextLevelEffectPosition: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _Position: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _RipplePosition: {r: 0, g: 0, b: 0, a: 0}

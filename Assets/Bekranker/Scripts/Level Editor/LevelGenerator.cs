@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
-using DG.Tweening;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -24,8 +23,8 @@ public class LevelGenerator : MonoBehaviour
     
     private Color _firstColor, _secondColor;
     private string _firstHex, _secondHex;
-    private static int _backgroundColorOne = Shader.PropertyToID("_RingSpawnPosition");
-    private static int _backgroundColorTwo = Shader.PropertyToID("_RingSpawnPosition");
+    private static int _backgroundColorOne = Shader.PropertyToID("_Color_1");
+    private static int _backgroundColorTwo = Shader.PropertyToID("_Color_2");
 
     public void CreateLevel()
     {
@@ -33,6 +32,7 @@ public class LevelGenerator : MonoBehaviour
         var spriteSizeX = _Puzzle_Sprite.width / _Level_Size.x;
         var spriteSizeY =  _Puzzle_Sprite.height / _Level_Size.y;
         var sideSize = 5.1145f / _Level_Size.x;
+        var halfSizeOfPicture = sideSize / 2;
         var unitPer2 = sideSize / 2;
         FolderCreator.CreateEmptyFolder(_Level.ToString());
         AssetDatabase.Refresh();
@@ -43,11 +43,15 @@ public class LevelGenerator : MonoBehaviour
                 GameObject piece = new GameObject();
                 piece.name = "Piece" + x + y;
                 piece.transform.SetParent(_Parent.transform);
+                piece.layer = 6;
+                print(LayerMask.LayerToName(6));
                 piece.transform.tag = "Line";
-                piece.transform.position = new Vector3((sideSize * x - unitPer2), (sideSize * y - unitPer2));
+                piece.transform.position = new Vector3((sideSize * x) - sideSize, (sideSize * y)- sideSize);
+                piece.AddComponent<Piece>();
                 var rect = new Rect(x * spriteSizeX, y * spriteSizeY, spriteSizeX, spriteSizeY);
                 var sprite = Sprite.Create(_Puzzle_Sprite, rect, Vector2.one * 0.5f, _TexturePixelPerUnit);
                 piece.AddComponent<SpriteRenderer>().sprite = sprite;
+                piece.AddComponent<BoxCollider2D>();
                 AssetDatabase.CreateAsset(sprite, $"Assets/Levels/Level{_Level}/Photo{x}{y}.asset");
             }
         }
@@ -65,10 +69,12 @@ public class LevelGenerator : MonoBehaviour
         }
         if (ColorUtility.TryParseHtmlString(hexOne, out _firstColor))
         {
+            _BackgroundMaterial.SetColor(_backgroundColorOne, _firstColor);
             print("Parsed: " + hexOne);
         }
         if (ColorUtility.TryParseHtmlString(hexOne, out _secondColor))
         {
+            _BackgroundMaterial.SetColor(_backgroundColorTwo, _secondColor);
             print("Parsed: " + hexTwo);
         }
         print(hexOne + " - " + hexTwo);

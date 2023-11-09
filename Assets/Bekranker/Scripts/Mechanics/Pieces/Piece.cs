@@ -7,21 +7,25 @@ public class Piece : MonoBehaviour
 {
     public delegate void _turnAction();
     public _turnAction TurnAction; 
-
     public bool CorrectAngle;
-    public List<Vector3> Angles = new();
     public int Index;
-    private ClickManager _clickManager;
     private Transform _t;
+    public List<int> Angles = new List<int>
+    {
+        0,
+        90,
+        180,
+        270
+    };
 
     private void Start(){
-        _clickManager = GetComponent<ClickManager>();
         _t = transform;
     }
 
     public void TurnMe(){
         Index = (Index + 1 < Angles.Count) ? Index + 1 : 0; 
-        _t.DORotate(Angles[Index], _clickManager.Speed).SetUpdate(true);
-        TurnAction?.Invoke();
+        _t.DORotate(new Vector3(_t.rotation.x, _t.rotation.y, Angles[Index]), 0.5f).SetUpdate(true).OnComplete(()=>{
+           TurnAction?.Invoke();
+        });
     }
 }
