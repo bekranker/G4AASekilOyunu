@@ -5,11 +5,19 @@ using UnityEngine;
 public class Piece_AffectingLines : MonoBehaviour
 {
     public Piece AffectedLine;
-    public Piece ParentPiece;
+    private Piece _mainPiece;
 
-    public void AffetedTurn(){
-        AffectedLine.TurnMe();
+    void Awake(){
+        _mainPiece = GetComponent<Piece>();
+    }
+    void OnEnable(){
+        _mainPiece.TurnAction +=AffectedTurn; 
+    }
+    void OnDisable(){
+        _mainPiece.TurnAction -=AffectedTurn; 
     }
 
-
+    public void AffectedTurn(){
+        AffectedLine.TurnMe();
+    }
 }

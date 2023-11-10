@@ -8,24 +8,38 @@ public enum Mechanics
     FlipHorizontal
 }
 
-[CustomEditor(typeof(GameObject))]
 public class AddMechanic : EditorWindow
 {
+    private GameObject _selectedObject, _selectedObject1, _wasSelectedObject, _wasSelectedObject1;
     private Mechanics _selectedEnum;
-    private string _chosenOneName;
-    private string _chooseTwoName;
     private GameObject _selectedObjectOne, _selectedObjectTwo;
 
-    [MenuItem("Window/My Custom Window")]
+    [MenuItem("Mert Buraya Tikla/Simdi Buraya Tikla")]
     public static void ShowWindow()
     {
-        GetWindow<AddMechanic>("Custom Window");
+        GetWindow<AddMechanic>("Evet Mert Burasi");
+    }
+
+    private void OnEnable()
+    {
+        SceneView.duringSceneGui += OnSceneGUI;
+        Selection.selectionChanged += OnSelectionChanged;
+    }
+
+    private void OnDisable()
+    {
+        SceneView.duringSceneGui -= OnSceneGUI;
+        Selection.selectionChanged -= OnSelectionChanged;
     }
 
     private void OnGUI()
     {
-        
-        GUILayout.Label("Sag Tiklanan Nesne: " + _chooseTwoName);
+        if(_selectedObjectOne != null){
+            GUILayout.Label("Sol Tiklanan Nesne: " + _selectedObjectOne.name);
+        }
+        if(_selectedObjectTwo != null){
+            GUILayout.Label("Sag Tiklanan Nesne: " + _selectedObjectTwo.name);
+        }
 
         EditorGUILayout.BeginVertical();
 
@@ -42,6 +56,7 @@ public class AddMechanic : EditorWindow
         {
             if (_selectedObjectOne != null && _selectedObjectTwo != null)
             {
+                
                 switch (_selectedEnum)
                 {
                     case Mechanics.AffectingLines:
@@ -58,40 +73,37 @@ public class AddMechanic : EditorWindow
                     default:
                         break;
                 }
-                Debug.Log(_chosenOneName + " " + _chooseTwoName);
-            }
-            else
-            {
-                Debug.LogError("Secilen nesneler eksik. Lutfen sol ve sag tiklamayla iki nesneyi secin.");
+                GUILayout.Label("AFERIM MERT");
             }
         }
     }
-
     private void OnSceneGUI(SceneView sceneView)
     {
         Event currentEvent = Event.current;
-
-        if (currentEvent.type == EventType.MouseDown)
+        if(currentEvent.type == EventType.MouseDown)
         {
-            if (currentEvent.button == 0)
+            if(currentEvent.button == 1)
             {
-                _selectedObjectOne = Selection.activeGameObject;
-                if (_selectedObjectOne != null)
-                {
-                    _chosenOneName = _selectedObjectOne.name;
-                    GUILayout.Label("Sol Tiklanan Nesne: " + _chosenOneName);
+                GameObject clickedObject = HandleUtility.PickGameObject(Event.current.mousePosition, true);
+                if(clickedObject != null){
+                    _selectedObjectTwo = clickedObject;
+                    
                 }
+                Repaint();
             }
-            else if (currentEvent.button == 1)
+            if(currentEvent.button == 0)
             {
-                _selectedObjectTwo = HandleUtility.PickGameObject(Event.current.mousePosition, true);
-                GetWindow<AddMechanic>("Custom Window");
+                GameObject clickedObject = Selection.activeGameObject;
+                if(clickedObject != null){
+                    _selectedObjectOne = clickedObject;
+                    
+                }
+                Repaint();
             }
         }
-        if (currentEvent.type == EventType.MouseDown && currentEvent.button == 1)
-    {
-        currentEvent.Use();
     }
+    private void OnSelectionChanged()
+    {
         Repaint();
     }
 }

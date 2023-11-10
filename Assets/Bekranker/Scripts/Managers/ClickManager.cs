@@ -47,7 +47,7 @@ public class ClickManager : MonoBehaviour
         if(hitColldier == null) return;
         var hitGameObject = hitColldier.gameObject;
         print("Turned" );
-        if(hitGameObject.TryGetComponent(out Piece _piece) && !hitGameObject.GetComponent<Piece_FlipHorizontal>())
+        if(hitGameObject.TryGetComponent(out _piece) && !hitGameObject.GetComponent<Piece_FlipHorizontal>())
         {
             //Turn On Z
             _piece.TurnMe();
