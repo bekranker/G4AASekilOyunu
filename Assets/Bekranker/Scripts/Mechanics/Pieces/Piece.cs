@@ -24,7 +24,7 @@ public class Piece : MonoBehaviour
     
     public void TurnMe(){
         Index = (Index + 1 < Angles.Count) ? Index + 1 : 0; 
-        _t.DORotate(new Vector3(_t.rotation.x, _t.rotation.y, Angles[Index]), 0.5f).SetUpdate(true);
+        _t.DOLocalRotate(new Vector3(_t.rotation.x, _t.rotation.y, Angles[Index]), 0.5f).SetUpdate(true);
         TurnAction?.Invoke();
     }
 }
