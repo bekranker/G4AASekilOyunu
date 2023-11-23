@@ -18,5 +18,4 @@ public class LevelManager : MonoBehaviour
         _Material.SetColor(_backgroundColorOne, ColorOne);
         _Material.SetColor(_backgroundColorTwo, ColorTwo);
     }
-    
 }

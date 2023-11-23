@@ -11,13 +11,13 @@ public class Piece_AffectingLines : MonoBehaviour
         _mainPiece = GetComponent<Piece>();
     }
     void OnEnable(){
-        _mainPiece.TurnAction +=AffectedTurn; 
+        _mainPiece.TurnAction += AffectedTurn; 
     }
     void OnDisable(){
-        _mainPiece.TurnAction -=AffectedTurn; 
+        _mainPiece.TurnAction -= AffectedTurn;
     }
 
     public void AffectedTurn(){
-        AffectedLine.TurnMe();
+        AffectedLine.TurnMeZ();
     }
 }

@@ -5,7 +5,6 @@ public enum Mechanics
 {
     AffectingLines,
     Swide,
-    FlipHorizontal
 }
 
 public class AddMechanic : EditorWindow
@@ -44,7 +43,7 @@ public class AddMechanic : EditorWindow
         EditorGUILayout.BeginVertical();
 
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Enum Secimi:");
+        EditorGUILayout.LabelField("Mekanik secimi:");
 
         _selectedEnum = (Mechanics)EditorGUILayout.EnumPopup(_selectedEnum);
 
@@ -65,10 +64,6 @@ public class AddMechanic : EditorWindow
                     case Mechanics.Swide:
                         _selectedObjectOne.AddComponent<Piece_GridScrollManager>();
                         _selectedObjectTwo.AddComponent<Piece_GridScrollManager>();
-                        break;
-                    case Mechanics.FlipHorizontal:
-                        _selectedObjectOne.AddComponent<Piece_FlipHorizontal>();
-                        _selectedObjectTwo.AddComponent<Piece_FlipHorizontal>();
                         break;
                     default:
                         break;

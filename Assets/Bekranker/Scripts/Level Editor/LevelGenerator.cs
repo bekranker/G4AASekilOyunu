@@ -66,19 +66,25 @@ public class LevelGenerator : MonoBehaviour
         {
             hexTwo += _Hexs[_Level - 1][i];
         }
-        if (ColorUtility.TryParseHtmlString(hexOne, out _firstColor))
-        {
-            _BackgroundMaterial.SetColor(_backgroundColorOne, _firstColor);
-        }
-        if (ColorUtility.TryParseHtmlString(hexOne, out _secondColor))
-        {
-            _BackgroundMaterial.SetColor(_backgroundColorTwo, _secondColor);
-        }
-        _LevelManager.ColorOne = _firstColor;
-        _LevelManager.ColorTwo = _secondColor;
-
+        ParselingFirstColor(hexOne,  _backgroundColorOne);
+        ParselingSecondColor(hexTwo,  _backgroundColorTwo);
+        
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
+    }
+    private void ParselingFirstColor(string hexString,  int staticValue){
+        if (ColorUtility.TryParseHtmlString(hexString, out Color a))
+        {
+            _LevelManager.ColorOne = a;
+            _BackgroundMaterial.SetColor(staticValue, a);
+        }
+    }
+    private void ParselingSecondColor(string hexString, int staticValue){
+        if (ColorUtility.TryParseHtmlString(hexString, out Color a))
+        {
+            _LevelManager.ColorTwo = a;
+            _BackgroundMaterial.SetColor(staticValue, a);
+        }
     }
     public void Save() => CreatePrefab.ToPrefab(_LevelPrefab);
     public void SettingLevelColor()

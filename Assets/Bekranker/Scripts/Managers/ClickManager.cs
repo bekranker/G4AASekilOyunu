@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Lean.Touch;
+using TMPro;
 using UnityEngine;
 
 public class ClickManager : MonoBehaviour
@@ -11,49 +13,94 @@ public class ClickManager : MonoBehaviour
     public float Speed;
 
     [Space(15)]
-    [Header("---Piece Props")]
+    [Header("---Props")]
     [Space(15)]
-
-
-
-    [Space(15)]
-    [Header("---Managers")]
-    [Space(15)]
+    [SerializeField] private LayerMask _RayLayer;
     private RaycastHit2D _hit;
     private Piece _piece;
-    public Vector3 FingerDownPosition;
+    private Vector3 FingerDownPosition;
     private Camera _camera;
+    private Collider2D _hitCollider;
+    private GameObject _hitGameObject;
+    private Directions EDirections = new();
+    [SerializeField] private TMP_Text _ButtonText; 
+
 
     void Start(){
         _camera = Camera.main;
     }
-
-
     void OnEnable()
     {
-        LeanTouch.OnFingerDown += Raycasting;
+        LeanTouch.OnFingerUp += Raycasting;
     }
     void OnDisable()
     {
-        LeanTouch.OnFingerDown -= Raycasting;
+        LeanTouch.OnFingerUp -= Raycasting;
     }
-    
+    public void Raycasting(LeanFinger finger)
+    {
+        if(!Raycast(finger)) return;
+        _hitGameObject = _hitCollider.gameObject;
+        HitedPiece();
+        
+        switch (EDirections)
+        {
+            case Directions.Z:
+                TurnZ();
+                break; 
+            case Directions.X:
+                TrunX();
+                break;
+            case Directions.Y:
+                TurnY();
+                break;
+            default:
+                break;
+        }
+    }
 
-    public void Raycasting(LeanFinger finger){
+    private void TurnZ()
+    {
+        _piece.TurnMeZ();
+    }
+    private void TurnY()
+    {
+        _piece.TurnMeY();
+    }
+    private void TrunX()
+    {
+        _piece.TurnMeX();
+    }
+    private bool Raycast(LeanFinger finger)
+    {
         FingerDownPosition = _camera.ScreenToWorldPoint(finger.ScreenPosition);
         FingerDownPosition.z = 0;
-        RaycastHit2D hit = Physics2D.Raycast(FingerDownPosition, Vector3.forward, Mathf.Infinity);
-        var hitColldier = hit.collider;
-        if(hitColldier == null) return;
-        var hitGameObject = hitColldier.gameObject;
-        print("Turned" );
-        if(hitGameObject.TryGetComponent(out _piece) && !hitGameObject.GetComponent<Piece_FlipHorizontal>())
+        _hit = Physics2D.Raycast(FingerDownPosition, Vector3.forward, Mathf.Infinity, _RayLayer);
+        _hitCollider = _hit.collider;
+        return _hitCollider;
+    }
+    private void HitedPiece() 
+    {
+        _piece = _hitGameObject.GetComponent<Piece>();
+    }
+    public void ChangeState()
+    {
+        switch (EDirections)
         {
-            //Turn On Z
-            _piece.TurnMe();
-        }
-        if(hitGameObject.TryGetComponent(out Piece_FlipHorizontal piece_Horiztonal)){
-            //Turn On Y
+            case Directions.Z:
+                _ButtonText.text = "Flip X";
+                EDirections = Directions.Y;
+                break; 
+            case Directions.X:
+                _ButtonText.text = "Flip Y";
+                EDirections = Directions.Z;
+                break;
+            case Directions.Y:
+                _ButtonText.text = "Flip Z";
+                EDirections = Directions.X;
+                break;
+            default:
+                break;
         }
     }
 }
