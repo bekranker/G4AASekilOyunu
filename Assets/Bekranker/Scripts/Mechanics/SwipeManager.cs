@@ -11,7 +11,9 @@ public class SwipeManager : MonoBehaviour
     [Space(15)]
     [SerializeField] private LayerMask _RayLayer;
 
-
+    /// <summary>
+    /// https://github.com/modesttree/Zenject
+    /// </summary>
 
     private RaycastHit2D _hit;
     private Camera _camera;
@@ -29,6 +31,7 @@ public class SwipeManager : MonoBehaviour
     void Start()
     {
         _camera = Camera.main;
+        _sequence = DOTween.Sequence();
     }
     void OnEnable()
     {
@@ -48,6 +51,7 @@ public class SwipeManager : MonoBehaviour
         VariableHandler(ref _hitGameObjectDown, ref _hitColliderDown, ref _downPiece_T, ref _downPiece_Position);
         _piece_GridScrollManagerDown = _hitGameObjectDown.GetComponent<Piece_GridScrollManager>();
         _downPiece_Position = _downPiece_T.position;
+        
     }
     public void HandleSwipe(LeanFinger swipe)
     {
@@ -60,18 +64,17 @@ public class SwipeManager : MonoBehaviour
             _piece_GridScrollManagerUp = _hitGameObjectUp.GetComponent<Piece_GridScrollManager>();
             if(!_piece_GridScrollManagerUp) return;
             if(_piece_GridScrollManagerDown.ChangingSide || _piece_GridScrollManagerUp.ChangingSide) return;
+            
+            _piece_GridScrollManagerUp.SwipeHandlerEnter();
+
             SwipeThePieces();
         }
     }
     private void SwipeThePieces()
     {
-        _piece_GridScrollManagerDown.ChangingSide = true;
-        _piece_GridScrollManagerUp.ChangingSide = true;
-
-        _sequence = DOTween.Sequence();
-        _sequence.Join(_downPiece_T.DOMove(_upPiece_Position, .5f).SetUpdate(true));
-        _sequence.Join(_upPiece_T.DOMove(_downPiece_Position, .5f).SetUpdate(true));
-        _sequence.OnComplete(()=>{_piece_GridScrollManagerDown.ChangingSide = false;_piece_GridScrollManagerUp.ChangingSide = false;});
+        _sequence.Join(_downPiece_T.DOMove(_upPiece_Position, .5f).SetUpdate(true).OnComplete(()=>_piece_GridScrollManagerDown.SwipeHandlerExit()));
+        _sequence.Join(_upPiece_T.DOMove(_downPiece_Position, .5f).SetUpdate(true).OnComplete(()=> _piece_GridScrollManagerUp.SwipeHandlerExit()));
+        _sequence.Play();
     }
     private void VariableHandler(ref GameObject gameObject, ref Collider2D collider2D, ref Transform t, ref Vector3 position)
     {

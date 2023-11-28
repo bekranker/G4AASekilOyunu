@@ -3,52 +3,66 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class Piece : MonoBehaviour, ITurn
+public class Piece : MonoBehaviour, ITurnable
 {
-    public delegate void _turnAction();
-    public _turnAction TurnAction;
-    public bool CorrectAngle;
-    public int IndexZ, IndexY, IndexX;
-    private Transform _t;
-    public List<int> AnglesZ = new List<int>
+    public struct IndexValues
+    {
+        public int Z{get; set;}
+        public int X{get; set;}
+        public int Y{get; set;}
+    }
+    public delegate void TurnAction();
+    public TurnAction turnAction;
+    public bool CorrectAngle{get; set;}
+    public bool CanTurn{get; set;}
+    public IndexValues Index;
+    private Transform _transform;
+    public readonly static List<int> AnglesZ = new List<int>
     {
         0,
         90,
         180,
         270
     };
-    public List<int> AnglesY = new List<int>
+    public readonly static List<int> AnglesY = new List<int>
     {
         0,
         180,
     };
-    public List<int> AnglesX = new List<int>
+    public readonly static List<int> AnglesX = new List<int>
     {
         0,
         180,
     };
 
     private void Start(){
-        _t = transform;
+        _transform = transform;
+        CanTurn = true;
     }
     
     public void TurnMeZ(){
-        IndexZ = (IndexZ + 1 < AnglesZ.Count) ? IndexZ + 1 : 0; 
+        if(!CanTurn) return;
+
+        Index.Z = (Index.Z + 1 < AnglesZ.Count) ? Index.Z + 1 : 0; 
         TurnMe();
     }
     public void TurnMeY()
     {
-        IndexY = (IndexY + 1 < AnglesY.Count) ? IndexY + 1 : 0;
+        if(!CanTurn) return;
+
+        Index.Y = (Index.Y + 1 < AnglesY.Count) ? Index.Y + 1 : 0;
         TurnMe();
     }
     public void TurnMeX()
     {
-        IndexX = (IndexX + 1 < AnglesX.Count) ? IndexX + 1 : 0;
+        if(!CanTurn) return;
+
+        Index.X = (Index.X + 1 < AnglesX.Count) ? Index.X + 1 : 0;
         TurnMe();
     }
     private void TurnMe()
     {
-        _t.DORotate(new Vector3(_t.rotation.x, AnglesY[IndexY], AnglesZ[IndexZ]), 0.5f).SetUpdate(true);
-        TurnAction?.Invoke();
+        _transform.DORotate(new Vector3(_transform.rotation.x, AnglesY[Index.Y], AnglesZ[Index.Z]), 0.5f).SetUpdate(true);
+        turnAction?.Invoke();
     } 
 }

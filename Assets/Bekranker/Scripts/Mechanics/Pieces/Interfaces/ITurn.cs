@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ITurn
+public interface ITurnable
 {
-    public void TurnMeX();
-    public void TurnMeY();
-    public void TurnMeZ();
+    void TurnMeX();
+    void TurnMeY();
+    void TurnMeZ();
 
 }
