@@ -5,6 +5,10 @@ using DG.Tweening;
 
 public static class StaticTweenFunctions
 {
+    public static Tween MyMoveHandler(this RectTransform transform, Vector3 targetPoint, float duration)
+    {
+        return transform.DOMove(targetPoint, duration).SetUpdate(true);
+    }
     public static Tween MyScaleHandler(this Transform transform, Vector3 targetScale, float duration)
     {
         return transform.DOScale(targetScale, duration).SetUpdate(true);
