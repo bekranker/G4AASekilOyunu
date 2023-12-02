@@ -1,33 +1,43 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class SettingsButton : MonoBehaviour
+public class SettingsButton : MonoBehaviour, ICommand
 {
-    [SerializeField]
-    private ButtonEffect _ButtonEffect;
-    [SerializeField]
-    private Image _Image;
-    [SerializeField]
-    private Sprite _SpriteNormal;
-    [SerializeField]
-    private Sprite _SpritePressed;
-
-
-
+    [SerializeField] private ButtonEffect _buttonEffect;
+    private Transform _transform;
+    private Sequence _sequence { get; set; }
 
     void OnEnable()
     {
-        _ButtonEffect.OnUp += OnClick;
+
     }
     void OnDisable()
     {
-        _ButtonEffect.OnUp -= OnClick;
+
     }
 
-    void OnClick()
+    
+    public void Execute()
     {
-        _Image.sprite = _SpritePressed;
+        _sequence = DOTween.Sequence();
+        _sequence.Append(PointUpTweenHandler(Vector2.one).OnComplete(()=> 
+        {
+            _buttonEffect._canClick = true;
+            _sequence.Kill();
+        }));
+    }
+    private Tween PointUpTweenHandler(Vector3 targetScale)
+    {
+        StaticTweenFunctions.MyRotationHandler(_transform, new Vector3(_transform.rotation.x, _transform.rotation.y, _transform.rotation.z + 180), .35f);
+        return StaticTweenFunctions.MyScaleHandler(_transform, targetScale, 0.35f);
+    }
+    public void Start()
+    {
+        _transform = transform;
+        _buttonEffect.StoredComman = this;
     }
 }
+

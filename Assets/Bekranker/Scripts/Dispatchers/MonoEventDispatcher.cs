@@ -5,10 +5,6 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using MonoDispatcher;
-
-
-
-
 public class MonoEventDispatcher : MonoBehaviour
 {
     private IList<IMono> _dispatchables = new List<IMono>();
@@ -25,11 +21,25 @@ public class MonoEventDispatcher : MonoBehaviour
         }
     }
 
-
-    void Start()  
+    void Start()
     {
-        foreach (var dispatchable in _dispatchables) {
+        foreach (var dispatchable in _dispatchables) {            
             dispatchable.OnStart();
+        }
+    }
+
+    void OnEnable()
+    {
+        foreach (var dispatchable in _dispatchables)
+        {
+            dispatchable.MyGetComponent += ()=> GetComponent<Component>();
+        }
+    }
+    void OnDisable()
+    {
+        foreach (var dispatchable in _dispatchables)
+        {
+            dispatchable.MyGetComponent -= ()=> GetComponent<Component>();
         }
     }
 }
