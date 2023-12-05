@@ -8,11 +8,13 @@ using MonoDispatcher;
 public class MonoEventDispatcher : MonoBehaviour
 {
     private IList<IMono> _dispatchables = new List<IMono>();
+    private IList<IUpdate> _updates = new List<IUpdate>();
 
     void Awake() 
     {
         Type[] types = Assembly.GetExecutingAssembly().GetTypes();
         IEnumerable<Type> dispatchableTypes = types.Where(t => typeof(IMono).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
+        IEnumerable<Type> IUpdatesDispatcher = types.Where(t => typeof(IUpdate).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
 
         foreach (var item in dispatchableTypes)
         {
@@ -42,4 +44,14 @@ public class MonoEventDispatcher : MonoBehaviour
             dispatchable.MyGetComponent -= ()=> GetComponent<Component>();
         }
     }
+    // void DispatchleExecuter(ref IList<Type> dispatchable, )
+    // {
+    //     foreach (var disp in dispatchable)
+    //     {
+
+    //     }
+    // }
+
+
+
 }

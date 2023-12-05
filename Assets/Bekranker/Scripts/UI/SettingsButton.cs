@@ -47,7 +47,7 @@ public class SettingsButton :  AbstractButton, ICommand
     }
     private Tween PointUpTweenHandler(Vector3 targetScale)
     {
-        StaticTweenFunctions.MyRotationHandler(_transform, new Vector3(_transform.rotation.x, _transform.rotation.y, _transform.rotation.z + 180), .35f);
+        StaticTweenFunctions.MyRotationHandler(_transform, Vector3.one * 180, .35f);
         return StaticTweenFunctions.MyScaleHandler(_transform, targetScale, 0.35f);
     }
 }
