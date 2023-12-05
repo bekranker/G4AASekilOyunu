@@ -16,6 +16,8 @@ public class ClickManager : MonoBehaviour
     [Header("---Props")]
     [Space(15)]
     [SerializeField] private LayerMask _RayLayer;
+    [HideInInspector] public AbstractClick ClickHandler;
+
     private RaycastHit2D _hit;
     private Piece _piece;
     private Vector3 FingerDownPosition;
@@ -40,6 +42,7 @@ public class ClickManager : MonoBehaviour
     public void Raycasting(LeanFinger finger)
     {
         if(!Raycast(finger)) return;
+        ClickHandler?.ClickHandler();
         _hitGameObject = _hitCollider.gameObject;
         HitedPiece();
         

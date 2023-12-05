@@ -13,23 +13,25 @@ public class MonoEventDispatcher : MonoBehaviour
     void Awake() 
     {
         Type[] types = Assembly.GetExecutingAssembly().GetTypes();
-        IEnumerable<Type> dispatchableTypes = types.Where(t => typeof(IMono).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
-        IEnumerable<Type> IUpdatesDispatcher = types.Where(t => typeof(IUpdate).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
+        IEnumerable<IMono> IMonoD = (IEnumerable<IMono>)types.Where(t => typeof(IMono).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
+        IEnumerable<IUpdate> IUpdatesDispatcher = (IEnumerable<IUpdate>)types.Where(t => typeof(IUpdate).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
 
-        foreach (var item in dispatchableTypes)
-        {
-            IMono monoEventDispatchable = (Activator.CreateInstance(item) as IMono);
-            _dispatchables.Add(monoEventDispatchable);
-        }
+        DispatchleHandler(ref _dispatchables, in IMonoD);
+        DispatchleHandler(ref _updates, in IUpdatesDispatcher);
     }
 
     void Start()
     {
         foreach (var dispatchable in _dispatchables) {            
-            dispatchable.OnStart();
+            dispatchable?.OnStart();
         }
     }
-
+    void Update()
+    {
+        foreach (var update in _updates){
+            update?.OnUpdate();
+        }
+    }
     void OnEnable()
     {
         foreach (var dispatchable in _dispatchables)
@@ -44,14 +46,12 @@ public class MonoEventDispatcher : MonoBehaviour
             dispatchable.MyGetComponent -= ()=> GetComponent<Component>();
         }
     }
-    // void DispatchleExecuter(ref IList<Type> dispatchable, )
-    // {
-    //     foreach (var disp in dispatchable)
-    //     {
-
-    //     }
-    // }
-
-
-
+    void DispatchleHandler<T>(ref IList<T> dispatchables, in IEnumerable<T> dispatchableList)
+    {
+        foreach (var dispatchableClass in dispatchableList)
+        {
+            T monoEventDispatchable = (T)Activator.CreateInstance(dispatchableClass as Type);
+            dispatchables.Add(monoEventDispatchable);
+        }
+    }
 }

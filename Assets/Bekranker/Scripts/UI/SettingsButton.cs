@@ -9,6 +9,13 @@ public class SettingsButton :  AbstractButton, ICommand
 {
     [SerializeField] private ButtonEffect _buttonEffect;
     [SerializeField] private List<AbstractButton> _buttons;
+    
+    private List<Vector3> _rotations = new List<Vector3>
+    {
+        new Vector3(0, 0, 0),
+        new Vector3(0, 0, 180)
+    };
+    private int _index;
     private RectTransform _transform;
     private Sequence _sequence { get; set; }
 
@@ -47,7 +54,7 @@ public class SettingsButton :  AbstractButton, ICommand
     }
     private Tween PointUpTweenHandler(Vector3 targetScale)
     {
-        StaticTweenFunctions.MyRotationHandler(_transform, Vector3.one * 180, .35f);
+        _buttonEffect.TurnAction();
         return StaticTweenFunctions.MyScaleHandler(_transform, targetScale, 0.35f);
     }
 }

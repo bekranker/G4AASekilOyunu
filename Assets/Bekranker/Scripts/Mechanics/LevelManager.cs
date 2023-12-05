@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    public int TurnCount;
     public Material _Material;
     public Color ColorOne, ColorTwo;
-
     private static int _backgroundColorOne = Shader.PropertyToID("_Color_1");
     private static int _backgroundColorTwo = Shader.PropertyToID("_Color_2");
 

@@ -9,19 +9,21 @@ public class LevelGenerator : MonoBehaviour
     [Space(15)]
     [Header("-----Level Props")]
     [Space(15)]
-    [SerializeField] private int _Level;
-    [SerializeField] private int _TexturePixelPerUnit;
-    [SerializeField] private Texture2D _Puzzle_Sprite;
-    [SerializeField] private Vector2Int _Level_Size;
+    [SerializeField] private int _level;
+    [SerializeField] private int _clickCount;
+    [SerializeField] private int _texturePixelPerUnit;
+    [SerializeField] private Texture2D _puzzle_Sprite;
+    [SerializeField] private Vector2Int _levelSize;
+
 
     [Space(15)]
     [Header("-----Level Objects")]
     [Space(15)]
-    [SerializeField] private GameObject _LevelPrefab;
-    [SerializeField] private GameObject _Parent;
-    [SerializeField] private List<string> _Hexs;
-    [SerializeField] private Material _BackgroundMaterial;
-    [SerializeField] private LevelManager _LevelManager;
+    [SerializeField] private GameObject _levelPrefab;
+    [SerializeField] private GameObject _parent;
+    [SerializeField] private List<string> _hexs;
+    [SerializeField] private Material _backgroundMaterial;
+    [SerializeField] private LevelManager _levelManager;
 
     private Color _firstColor, _secondColor;
     private string _firstHex, _secondHex;
@@ -30,29 +32,29 @@ public class LevelGenerator : MonoBehaviour
 
     public void CreateLevel()
     {
-        _Parent.name = "Level " + _Level.ToString();
-        _LevelPrefab.name = "LevelPrefab " + _Level.ToString();
-        var spriteSizeX = _Puzzle_Sprite.width / _Level_Size.x;
-        var spriteSizeY =  _Puzzle_Sprite.height / _Level_Size.y;
-        var sideSize = 5.1145f / _Level_Size.x;
-        FolderCreator.CreateEmptyFolder(_Level.ToString());
+        _parent.name = "Level " + _level.ToString();
+        _levelPrefab.name = "LevelPrefab " + _level.ToString();
+        var spriteSizeX = _puzzle_Sprite.width / _levelSize.x;
+        var spriteSizeY =  _puzzle_Sprite.height / _levelSize.y;
+        var sideSize = 5.1145f / _levelSize.x;
+        FolderCreator.CreateEmptyFolder(_level.ToString());
         AssetDatabase.Refresh();
-        for (int y = 0; y < _Level_Size.y; y++)
+        for (int y = 0; y < _levelSize.y; y++)
         {
-            for (int x = 0; x < _Level_Size.x; x++)
+            for (int x = 0; x < _levelSize.x; x++)
             {
                 GameObject piece = new GameObject();
                 piece.name = "Piece" + x + y;
-                piece.transform.SetParent(_Parent.transform);
+                piece.transform.SetParent(_parent.transform);
                 piece.layer = 6;
                 piece.transform.tag = "Line";
                 piece.transform.position = new Vector3((sideSize * x) - sideSize, (sideSize * y)- sideSize);
                 var rect = new Rect(x * spriteSizeX, y * spriteSizeY, spriteSizeX, spriteSizeY);
-                var sprite = Sprite.Create(_Puzzle_Sprite, rect, Vector2.one * 0.5f, _TexturePixelPerUnit);
+                var sprite = Sprite.Create(_puzzle_Sprite, rect, Vector2.one * 0.5f, _texturePixelPerUnit);
                 piece.AddComponent<SpriteRenderer>().sprite = sprite;
                 piece.AddComponent<BoxCollider2D>();
                 piece.AddComponent<Piece>();
-                AssetDatabase.CreateAsset(sprite, $"Assets/Levels/Level{_Level}/Photo{x}{y}.asset");
+                AssetDatabase.CreateAsset(sprite, $"Assets/Levels/Level{_level}/Photo{x}{y}.asset");
             }
         }
         SettingLevelColor();
@@ -60,11 +62,11 @@ public class LevelGenerator : MonoBehaviour
         string hexTwo = "#";
         for (int i = 0; i < 6; i++)
         {
-            hexOne += _Hexs[_Level - 1][i];
+            hexOne += _hexs[_level - 1][i];
         }
         for (int i = 7; i < 13; i++)
         {
-            hexTwo += _Hexs[_Level - 1][i];
+            hexTwo += _hexs[_level - 1][i];
         }
         ParselingFirstColor(hexOne,  _backgroundColorOne);
         ParselingSecondColor(hexTwo,  _backgroundColorTwo);
@@ -75,27 +77,27 @@ public class LevelGenerator : MonoBehaviour
     private void ParselingFirstColor(string hexString,  int staticValue){
         if (ColorUtility.TryParseHtmlString(hexString, out Color a))
         {
-            _LevelManager.ColorOne = a;
-            _BackgroundMaterial.SetColor(staticValue, a);
+            _levelManager.ColorOne = a;
+            _backgroundMaterial.SetColor(staticValue, a);
         }
     }
     private void ParselingSecondColor(string hexString, int staticValue){
         if (ColorUtility.TryParseHtmlString(hexString, out Color a))
         {
-            _LevelManager.ColorTwo = a;
-            _BackgroundMaterial.SetColor(staticValue, a);
+            _levelManager.ColorTwo = a;
+            _backgroundMaterial.SetColor(staticValue, a);
         }
     }
-    public void Save() => CreatePrefab.ToPrefab(_LevelPrefab);
+    public void Save() => CreatePrefab.ToPrefab(_levelPrefab);
     public void SettingLevelColor()
     {
         string colorPath = "Assets/COLORS.txt";
-        _Hexs = GetTXT.GetTexts(colorPath);
+        _hexs = GetTXT.GetTexts(colorPath);
     }
     public void ResetLevel(){
         List<GameObject> _pieces_ = GameObject.FindGameObjectsWithTag("Line").ToList();
         _pieces_?.ForEach((__piece__)=>{DestroyImmediate(__piece__);});
-        _Hexs.Clear();
+        _hexs.Clear();
     }
 }
 [CustomEditor(typeof(LevelGenerator))]
