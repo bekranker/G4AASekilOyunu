@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class ButtonEffect : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    private static float _speed = 0.35f;
+    private static float _speed = 0.2f;
     private static Vector2 _downScale = new Vector2(0.8f, 0.8f);
     private List<Vector3> _rotations = new List<Vector3>
     {
@@ -45,6 +45,6 @@ public class ButtonEffect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public void TurnAction()
     {
         _index = (_index == 1) ? 0 : _index + 1;
-        StaticTweenFunctions.MyRotationHandler(_transform, _rotations[_index], 0.35f);
+        StaticTweenFunctions.MyRotationHandler(_transform, _rotations[_index], _speed);
     }
 }

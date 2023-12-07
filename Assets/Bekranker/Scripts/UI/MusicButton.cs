@@ -8,8 +8,12 @@ public class MusicButton : AbstractButton, ICommand
     [SerializeField] private ButtonEffect _buttonEffect;
     [SerializeField] private RectTransform _to;
     [SerializeField] private RectTransform _transform;
+    private bool _toogle;
+    private Vector3 _startPos;
+
     void Start()
     {
+        _startPos = _transform.position;
         _buttonEffect.StoredComman = this;
     }
     public void Execute()
@@ -17,7 +21,13 @@ public class MusicButton : AbstractButton, ICommand
     }
     public override void SlideHandler()
     {
-        StaticTweenFunctions.MyMoveHandler(_transform, _to.position, 0.35f);
+        _toogle = !_toogle;
+        if(_toogle){
+            StaticTweenFunctions.MyMoveHandler(_transform, _to.position, 0.35f).SetEase(Ease.OutBack);
+        }
+        else{
+            StaticTweenFunctions.MyMoveHandler(_transform, _startPos, 0.35f).SetEase(Ease.InBack);
+        }
     }
 
     public override void EffectHandler()

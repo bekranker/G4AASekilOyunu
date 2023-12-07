@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -7,6 +8,10 @@ using UnityEngine;
 
 public class ClickManager : MonoBehaviour
 {
+    public static event Action OnClick;
+    
+
+
     [Space(15)]
     [Header("---Dotween Props")]
     [Space(15)]
@@ -16,7 +21,6 @@ public class ClickManager : MonoBehaviour
     [Header("---Props")]
     [Space(15)]
     [SerializeField] private LayerMask _RayLayer;
-    [HideInInspector] public AbstractClick ClickHandler;
 
     private RaycastHit2D _hit;
     private Piece _piece;
@@ -42,7 +46,7 @@ public class ClickManager : MonoBehaviour
     public void Raycasting(LeanFinger finger)
     {
         if(!Raycast(finger)) return;
-        ClickHandler?.ClickHandler();
+        OnClick?.Invoke();
         _hitGameObject = _hitCollider.gameObject;
         HitedPiece();
         

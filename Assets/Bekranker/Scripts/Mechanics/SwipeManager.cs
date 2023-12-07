@@ -51,7 +51,6 @@ public class SwipeManager : MonoBehaviour
         VariableHandler(ref _hitGameObjectDown, ref _hitColliderDown, ref _downPiece_T, ref _downPiece_Position);
         _piece_GridScrollManagerDown = _hitGameObjectDown.GetComponent<Piece_GridScrollManager>();
         _downPiece_Position = _downPiece_T.position;
-        
     }
     public void HandleSwipe(LeanFinger swipe)
     {

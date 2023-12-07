@@ -36,7 +36,7 @@ public class LevelGenerator : MonoBehaviour
         _levelPrefab.name = "LevelPrefab " + _level.ToString();
         var spriteSizeX = _puzzle_Sprite.width / _levelSize.x;
         var spriteSizeY =  _puzzle_Sprite.height / _levelSize.y;
-        var sideSize = 5.1145f / _levelSize.x;
+        var sideSize = 5.1245f / _levelSize.x;
         FolderCreator.CreateEmptyFolder(_level.ToString());
         AssetDatabase.Refresh();
         for (int y = 0; y < _levelSize.y; y++)
@@ -71,6 +71,8 @@ public class LevelGenerator : MonoBehaviour
         ParselingFirstColor(hexOne,  _backgroundColorOne);
         ParselingSecondColor(hexTwo,  _backgroundColorTwo);
         
+        _levelManager.TurnCount = _clickCount;
+
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }

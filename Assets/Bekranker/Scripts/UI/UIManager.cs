@@ -2,18 +2,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UIManager : AbstractClick
+public class UIManager : MonoBehaviour, IClick
 {
     [SerializeField] private LevelManager _levelManager;
-    [SerializeField] private ClickManager _clickManager;
-    private int _counter {get; set;}
+    public int _counter {get; private set;}
 
 
+    void OnEnable()
+    {
+        ClickManager.OnClick += ClickHandler;
+    }
+    void OnDisable()
+    {
+        ClickManager.OnClick -= ClickHandler;
+    }
     void Start()
     {
+        _counter = _levelManager.TurnCount;
     }
-    public override void ClickHandler()
+    public void ClickHandler()
     {
         DecreaseCounter();
     }
