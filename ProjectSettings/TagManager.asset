@@ -41,18 +41,6 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Foreground
-    uniqueID: 3020198219
-    locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: LineSprite
-    uniqueID: 1766672359
-    locked: 0
-  - name: CameraSortingLayer
-    uniqueID: 3824460985
-    locked: 0
-  - name: GUI-Canvas
-    uniqueID: 3264106287
     locked: 0

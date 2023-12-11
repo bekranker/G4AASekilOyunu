@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using System.Linq;
+using Sirenix.OdinInspector;
+using UnityEditor;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class LevelGenerator : MonoBehaviour
     private static int _backgroundColorOne = Shader.PropertyToID("_Color_1");
     private static int _backgroundColorTwo = Shader.PropertyToID("_Color_2");
 
+
+    [Button]
     public void CreateLevel()
     {
         _parent.name = "Level " + _level.ToString();
@@ -90,37 +93,17 @@ public class LevelGenerator : MonoBehaviour
             _backgroundMaterial.SetColor(staticValue, a);
         }
     }
+    [Button]
     public void Save() => CreatePrefab.ToPrefab(_levelPrefab);
     public void SettingLevelColor()
     {
         string colorPath = "Assets/COLORS.txt";
         _hexs = GetTXT.GetTexts(colorPath);
     }
+    [Button]
     public void ResetLevel(){
         List<GameObject> _pieces_ = GameObject.FindGameObjectsWithTag("Line").ToList();
         _pieces_?.ForEach((__piece__)=>{DestroyImmediate(__piece__);});
         _hexs.Clear();
     }
-}
-[CustomEditor(typeof(LevelGenerator))]
-public class LevelGeneratorEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-
-        if (GUILayout.Button("Do Level"))
-        {
-            levelGenerator().CreateLevel();
-        }
-        if(GUILayout.Button("Reset"))
-        {
-            levelGenerator().ResetLevel();
-        }
-        if(GUILayout.Button("Save")){
-            levelGenerator().Save();
-        }
-    }
-
-    private LevelGenerator levelGenerator()=> (LevelGenerator)target;
 }
