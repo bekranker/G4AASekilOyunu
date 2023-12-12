@@ -15,11 +15,12 @@ public class SettingsButton :  AbstractButton, ICommand
         new Vector3(0, 0, 0),
         new Vector3(0, 0, 180)
     };
+    
     private int _index;
     private RectTransform _transform;
     private Sequence _sequence { get; set; }
 
-
+    
 
 
     void OnEnable()
@@ -49,9 +50,12 @@ public class SettingsButton :  AbstractButton, ICommand
     public override void EffectHandler()
     {
         _sequence = DOTween.Sequence();
-        _sequence.Append(PointUpTweenHandler(Vector2.one));
-        _buttonEffect._canClick = true;
-        _sequence.Kill();
+        _sequence.Append(PointUpTweenHandler(Vector3.one).OnComplete(()=>
+        {
+            _buttonEffect._canClick = true;
+            _sequence.Kill();
+        }));
+        
     }
     private Tween PointUpTweenHandler(Vector3 targetScale)
     {

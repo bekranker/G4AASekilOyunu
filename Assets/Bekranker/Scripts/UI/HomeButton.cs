@@ -25,10 +25,10 @@ public class HomeButton : AbstractButton, ICommand
     {
         _toogle = !_toogle;
         if(_toogle){
-            DOVirtual.DelayedCall(.2f, ()=>StaticTweenFunctions.MyMoveHandler(_transform, _to.position, 0.35f));
+            DOVirtual.DelayedCall(.2f, ()=>StaticTweenFunctions.MyMoveHandler(_transform, _to.position, 0.35f).SetEase(Ease.OutBack));
         }
         else{
-           DOVirtual.DelayedCall(.2f, ()=>StaticTweenFunctions.MyMoveHandler(_transform, _startPos, 0.35f));
+           DOVirtual.DelayedCall(.2f, ()=>StaticTweenFunctions.MyMoveHandler(_transform, _startPos, 0.35f).SetEase(Ease.InBack));
         }
     }
 

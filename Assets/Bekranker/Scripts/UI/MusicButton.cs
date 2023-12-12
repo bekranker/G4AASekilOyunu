@@ -24,10 +24,10 @@ public class MusicButton : AbstractButton, ICommand
     {
         _toogle = !_toogle;
             if(_toogle){
-                StaticTweenFunctions.MyMoveHandler(_transform, _to.position, 0.35f);
+                StaticTweenFunctions.MyMoveHandler(_transform, _to.position, 0.35f).SetEase(Ease.OutBack);
             }
             else{
-                StaticTweenFunctions.MyMoveHandler(_transform, _startPos, 0.35f);
+                StaticTweenFunctions.MyMoveHandler(_transform, _startPos, 0.35f).SetEase(Ease.InBack);
             };
     }
     public override void EffectHandler()
