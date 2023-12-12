@@ -18,20 +18,20 @@ public class MusicButton : AbstractButton, ICommand
     }
     public void Execute()
     {
+        EffectHandler();
     }
-    public override void SlideHandler()
+    public override void SlideHandler() 
     {
         _toogle = !_toogle;
-        if(_toogle){
-            StaticTweenFunctions.MyMoveHandler(_transform, _to.position, 0.35f).SetEase(Ease.OutBack);
-        }
-        else{
-            StaticTweenFunctions.MyMoveHandler(_transform, _startPos, 0.35f).SetEase(Ease.InBack);
-        }
+            if(_toogle){
+                StaticTweenFunctions.MyMoveHandler(_transform, _to.position, 0.35f);
+            }
+            else{
+                StaticTweenFunctions.MyMoveHandler(_transform, _startPos, 0.35f);
+            };
     }
-
     public override void EffectHandler()
     {
-        //effekt kodları buraya
+        
     }
 }

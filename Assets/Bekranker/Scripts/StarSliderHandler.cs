@@ -32,7 +32,7 @@ public class StarSliderHandler : MonoBehaviour
     }
     private void StarSelector()
     {
-        if (_stars[_selectedIndex].fillAmount - _decreaser <= 0)
+        if (_stars[_selectedIndex].fillAmount - _decreaser < 0)
         {
             _selectedIndex = (_selectedIndex + 1 >= _stars.Count) ? 0 : _selectedIndex + 1;
         }

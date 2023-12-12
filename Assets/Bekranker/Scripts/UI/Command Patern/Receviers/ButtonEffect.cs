@@ -39,6 +39,10 @@ public class ButtonEffect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         if(!_canClick) return;
         _canClick = false;
+        ExecuteEffects();
+    }
+    private void ExecuteEffects(){
+
         OnUp?.Invoke();
         StoredComman?.Execute();
     }

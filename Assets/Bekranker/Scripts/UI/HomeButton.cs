@@ -8,8 +8,8 @@ public class HomeButton : AbstractButton, ICommand
     [SerializeField] private ButtonEffect _buttonEffect;
     [SerializeField] private RectTransform _to;
     [SerializeField] private RectTransform _transform;
-    private bool _toogle;
-    private Vector3 _startPos;
+    private bool _toogle{get; set;}
+    private Vector3 _startPos{get; set;}
 
 
     void Start()
@@ -19,20 +19,21 @@ public class HomeButton : AbstractButton, ICommand
     }
     public void Execute()
     {
+        EffectHandler();
     }
     public override void SlideHandler()
     {
         _toogle = !_toogle;
         if(_toogle){
-            DOVirtual.DelayedCall(.2f, ()=> StaticTweenFunctions.MyMoveHandler(_transform, _to.position, 0.35f).SetEase(Ease.OutBack));
+            DOVirtual.DelayedCall(.2f, ()=>StaticTweenFunctions.MyMoveHandler(_transform, _to.position, 0.35f));
         }
         else{
-            DOVirtual.DelayedCall(.2f, ()=> StaticTweenFunctions.MyMoveHandler(_transform, _startPos, 0.35f).SetEase(Ease.InBack));
+           DOVirtual.DelayedCall(.2f, ()=>StaticTweenFunctions.MyMoveHandler(_transform, _startPos, 0.35f));
         }
     }
 
     public override void EffectHandler()
     {
-        //effekt kodları buraya
+        StaticTweenFunctions.MyRotationPunchHandler(_transform, new Vector3(0,0,90), 0.25f);
     }
 }
