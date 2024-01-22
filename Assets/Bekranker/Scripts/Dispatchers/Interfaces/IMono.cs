@@ -9,10 +9,8 @@ namespace MonoDispatcher{
         event Func<Component> MyGetComponent;
         void OnStart();
     }
-
-    public struct Variables
-    {
-        public int Speed;
-        public float Scale;
+    public interface IEnableAndDisable{
+        void OnEnable();
+        void OnDisable();
     }
 }

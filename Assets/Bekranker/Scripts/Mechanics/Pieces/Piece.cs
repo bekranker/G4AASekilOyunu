@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class Piece : MonoBehaviour, ITurnable
 {
+    [SerializeField] public LevelManager _LevelManager;
     public struct IndexValues
     {
         public int Z{get; set;}
@@ -13,10 +14,8 @@ public class Piece : MonoBehaviour, ITurnable
     }
     public delegate void TurnAction();
     public TurnAction turnAction;
-    public bool CorrectAngle{get; set;}
     public bool CanTurn{get; set;}
     public IndexValues Index;
-    private Transform _transform;
     public readonly static List<int> AnglesZ = new List<int>
     {
         0,
@@ -34,12 +33,18 @@ public class Piece : MonoBehaviour, ITurnable
         0,
         180,
     };
+    public Vector3 StartPosition;
 
+    private void Awake()
+    {
+        StartPosition = transform.position;
+    }
     private void Start(){
-        _transform = transform;
         CanTurn = true;
     }
     
+    //Turn Direction Functions
+    #region ITurnable
     public void TurnMeZ(){
         if(!CanTurn) return;
 
@@ -60,9 +65,24 @@ public class Piece : MonoBehaviour, ITurnable
         Index.X = (Index.X + 1 < AnglesX.Count) ? Index.X + 1 : 0;
         TurnMe();
     }
+    #endregion
+    
+    //Turn Action
     private void TurnMe()
     {
-        _transform.DORotate(new Vector3(_transform.rotation.x, AnglesY[Index.Y], AnglesZ[Index.Z]), 0.5f).SetUpdate(true);
+        transform.DORotate(new Vector3(transform.rotation.x, AnglesY[Index.Y], AnglesZ[Index.Z]), 0.5f).SetUpdate(true);
+        if(CorrectState())
+        {
+            _LevelManager.AddPiece(this);
+        }
+        else
+        {
+            _LevelManager.RemovePiece(this);
+        }
         turnAction?.Invoke();
-    } 
+    }
+    private bool CorrectState()
+    {
+        return AnglesZ[Index.Z] == 0 && AnglesY[Index.Y] == 0 && AnglesX[Index.X] == 0 && transform.position == StartPosition;
+    }
 }

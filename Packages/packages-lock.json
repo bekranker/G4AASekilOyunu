@@ -1,10 +1,11 @@
 {
   "dependencies": {
-    "com.coffee.softmask-for-ugui": {
-      "version": "file:C:/Users/bekranker/Desktop/SoftMaskForUGUI-main",
+    "com.bitbebop.ui-toolkit-safe-area": {
+      "version": "https://github.com/artstorm/ui-toolkit-safe-area.git?path=/Packages/com.bitbebop.ui-toolkit-safe-area",
       "depth": 0,
-      "source": "local",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "20395599bc899c15f05495a9b0d2131a8c29f4f8"
     },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",

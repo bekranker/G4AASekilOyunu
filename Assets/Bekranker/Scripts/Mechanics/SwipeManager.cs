@@ -57,11 +57,15 @@ public class SwipeManager : MonoBehaviour
         if (swipe.Up)
         {
             if(!_piece_GridScrollManagerDown) return;
+
             if(!Raycast(swipe)) return;
+            
             VariableHandler(ref _hitGameObjectUp, ref _hitColliderUp, ref _upPiece_T, ref _upPiece_Position);
             if(_hitGameObjectUp == _hitGameObjectDown) return;
+            
             _piece_GridScrollManagerUp = _hitGameObjectUp.GetComponent<Piece_GridScrollManager>();
             if(!_piece_GridScrollManagerUp) return;
+            
             if(_piece_GridScrollManagerDown.ChangingSide || _piece_GridScrollManagerUp.ChangingSide) return;
             
             _piece_GridScrollManagerUp.SwipeHandlerEnter();

@@ -6,12 +6,11 @@ using Lean.Touch;
 using TMPro;
 using UnityEngine;
 
+
 public class ClickManager : MonoBehaviour
 {
     public static event Action OnClick;
     
-
-
     [Space(15)]
     [Header("---Dotween Props")]
     [Space(15)]
@@ -20,16 +19,16 @@ public class ClickManager : MonoBehaviour
     [Space(15)]
     [Header("---Props")]
     [Space(15)]
-    [SerializeField] private LayerMask _RayLayer;
-
+    [SerializeField] private LayerMask _rayLayer;
+    
     private RaycastHit2D _hit;
     private Piece _piece;
-    private Vector3 FingerDownPosition;
+    private Vector3 _fingerPosition;
     private Camera _camera;
     private Collider2D _hitCollider;
-    private GameObject _hitGameObject;
-    private Directions EDirections = new();
-    [SerializeField] private TMP_Text _ButtonText; 
+    [HideInInspector] public GameObject _hitGameObject;
+    private Directions _eDirections = new();
+    [SerializeField] private TMP_Text _buttonText; 
 
 
     void Start(){
@@ -37,11 +36,11 @@ public class ClickManager : MonoBehaviour
     }
     void OnEnable()
     {
-        LeanTouch.OnFingerUp += Raycasting;
+        LeanTouch.OnFingerDown += Raycasting;
     }
     void OnDisable()
     {
-        LeanTouch.OnFingerUp -= Raycasting;
+        LeanTouch.OnFingerDown -= Raycasting;
     }
     public void Raycasting(LeanFinger finger)
     {
@@ -50,7 +49,7 @@ public class ClickManager : MonoBehaviour
         _hitGameObject = _hitCollider.gameObject;
         HitedPiece();
         
-        switch (EDirections)
+        switch (_eDirections)
         {
             case Directions.Z:
                 TurnZ();
@@ -80,9 +79,9 @@ public class ClickManager : MonoBehaviour
     }
     private bool Raycast(LeanFinger finger)
     {
-        FingerDownPosition = _camera.ScreenToWorldPoint(finger.ScreenPosition);
-        FingerDownPosition.z = 0;
-        _hit = Physics2D.Raycast(FingerDownPosition, Vector3.forward, Mathf.Infinity, _RayLayer);
+        _fingerPosition = _camera.ScreenToWorldPoint(finger.ScreenPosition);
+        _fingerPosition.z = 0;
+        _hit = Physics2D.Raycast(_fingerPosition, Vector3.forward, Mathf.Infinity, _rayLayer);
         _hitCollider = _hit.collider;
         return _hitCollider;
     }
@@ -92,19 +91,19 @@ public class ClickManager : MonoBehaviour
     }
     public void ChangeState()
     {
-        switch (EDirections)
+        switch (_eDirections)
         {
             case Directions.Z:
-                _ButtonText.text = "Flip X";
-                EDirections = Directions.Y;
+                _buttonText.text = "Flip X";
+                _eDirections = Directions.Y;
                 break; 
             case Directions.X:
-                _ButtonText.text = "Flip Y";
-                EDirections = Directions.Z;
+                _buttonText.text = "Flip Y";
+                _eDirections = Directions.Z;
                 break;
             case Directions.Y:
-                _ButtonText.text = "Flip Z";
-                EDirections = Directions.X;
+                _buttonText.text = "Flip Z";
+                _eDirections = Directions.X;
                 break;
             default:
                 break;

@@ -11,10 +11,8 @@ public static class FolderCreator
             {
                 Directory.CreateDirectory(_path);
                 AssetDatabase.Refresh();
+                return;
             }
-            else
-            {
-                Debug.LogWarning("Bu isimde bir dosya var");
-            }
+            Debug.LogWarning("Bu isimde bir dosya var");
         }
 }

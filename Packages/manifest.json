@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.coffee.softmask-for-ugui": "file:C:/Users/bekranker/Desktop/SoftMaskForUGUI-main",
+    "com.bitbebop.ui-toolkit-safe-area": "https://github.com/artstorm/ui-toolkit-safe-area.git?path=/Packages/com.bitbebop.ui-toolkit-safe-area",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.unity.ai.navigation": "1.1.5",
     "com.unity.collab-proxy": "2.2.0",

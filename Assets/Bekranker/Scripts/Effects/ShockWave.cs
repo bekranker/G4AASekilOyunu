@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,49 +12,36 @@ public class ShockWave : MonoBehaviour
     public Vector2 ShockWaveStartPoint;
     private Coroutine _shockWaveCoroutine;
     private Material _material;
-    private static int _ringSize = Shader.PropertyToID("_RingSize");
+    private static int _ringSize = Shader.PropertyToID("_WaveDistanceFromCenter");
     private static int _mainTexture = Shader.PropertyToID("_MainTex");
-    private static int _shockWavePosition = Shader.PropertyToID("_RingSpawnPosition");
+    private static int _shockWavePosition = Shader.PropertyToID("_SquarePosition");
 
     void Awake()
     {
         _material = _shockWaveImage.material;
     }
-    private void Start()
+    
+    public void CallShockWave(Vector2 shockWavePos)
     {
-        _shockWaveImage.enabled = false;
-    }
-
-    public void CallShockWave(Vector3 to, Vector2 shockWavePos)
-    {
-        _shockWaveImage.enabled = true;
-        CreateAudio.PlayAudio($"OptionsOpeningSoundEffect", .05f, "General", "Sound");
         ShockWaveStartPoint = shockWavePos;
-        transform.position = to;
-        _shockWaveCoroutine = StartCoroutine(ScreenShockWaveAction(-.1f, 2f));
+        _shockWaveCoroutine = StartCoroutine(ScreenShockWaveAction(-.1f, 1f));
     }
     
-    private IEnumerator ScreenShockWaveAction(float startPos, float endPos)
+    private IEnumerator ScreenShockWaveAction(float startValue, float endValue)
     {
         _material.SetVector(_shockWavePosition, ShockWaveStartPoint);
-        _material.SetFloat(_ringSize, startPos);
+        _material.SetFloat(_ringSize, startValue);
 
         float lerpedAmount = 0f;
-
         float elapsedTime = 0f;
-
         while (elapsedTime < _shockWaveTime)
         {
             elapsedTime += Time.unscaledDeltaTime;
 
-            lerpedAmount = Mathf.Lerp(startPos, endPos, (elapsedTime / _shockWaveTime));
+            lerpedAmount = Mathf.Lerp(startValue, endValue, (elapsedTime / _shockWaveTime));
             _material.SetFloat(_ringSize, lerpedAmount);
 
             yield return null;
-        }
-        if (elapsedTime >= _shockWaveTime)
-        {
-            _shockWaveImage.enabled = false;
         }
     }
 }
