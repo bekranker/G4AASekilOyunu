@@ -21,7 +21,7 @@ public class SwipeManager : MonoBehaviour
     private Collider2D _hitColliderDown, _hitColliderUp;
     private GameObject _hitGameObjectDown, _hitGameObjectUp;
     private Piece_GridScrollManager _piece_GridScrollManagerDown, _piece_GridScrollManagerUp;
-    private Piece _piece;
+    private Piece _pieceDown, _pieceUp;
     private Vector3 _downPiece_Position, _upPiece_Position;
     private Transform _downPiece_T, _upPiece_T;
     private Sequence _sequence;
@@ -50,6 +50,7 @@ public class SwipeManager : MonoBehaviour
         if(!Raycast(finger)) return;
         VariableHandler(ref _hitGameObjectDown, ref _hitColliderDown, ref _downPiece_T, ref _downPiece_Position);
         _piece_GridScrollManagerDown = _hitGameObjectDown.GetComponent<Piece_GridScrollManager>();
+        _pieceDown = _hitGameObjectDown.GetComponent<Piece>();
         _downPiece_Position = _downPiece_T.position;
     }
     public void HandleSwipe(LeanFinger swipe)
@@ -67,7 +68,7 @@ public class SwipeManager : MonoBehaviour
             if(!_piece_GridScrollManagerUp) return;
             
             if(_piece_GridScrollManagerDown.ChangingSide || _piece_GridScrollManagerUp.ChangingSide) return;
-            
+            _pieceUp = _hitGameObjectUp.GetComponent<Piece>();
             _piece_GridScrollManagerUp.SwipeHandlerEnter();
 
             SwipeThePieces();
@@ -75,8 +76,16 @@ public class SwipeManager : MonoBehaviour
     }
     private void SwipeThePieces()
     {
-        _sequence.Join(_downPiece_T.DOMove(_upPiece_Position, .5f).SetUpdate(true).OnComplete(()=>_piece_GridScrollManagerDown.SwipeHandlerExit()));
-        _sequence.Join(_upPiece_T.DOMove(_downPiece_Position, .5f).SetUpdate(true).OnComplete(()=> _piece_GridScrollManagerUp.SwipeHandlerExit()));
+        _sequence.Join(_downPiece_T.DOMove(_upPiece_Position, .5f).SetUpdate(true).OnComplete(()=>
+        {
+            _piece_GridScrollManagerDown.SwipeHandlerExit(); 
+            _pieceDown.SetCorrectPiece();
+        }));
+        _sequence.Join(_upPiece_T.DOMove(_downPiece_Position, .5f).SetUpdate(true).OnComplete(()=> 
+        {
+            _piece_GridScrollManagerUp.SwipeHandlerExit();
+            _pieceUp.SetCorrectPiece();    
+        }));
         _sequence.Play();
     }
     private void VariableHandler(ref GameObject gameObject, ref Collider2D collider2D, ref Transform t, ref Vector3 position)

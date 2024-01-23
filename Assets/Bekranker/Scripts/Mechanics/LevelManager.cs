@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public int PieceCount;
@@ -17,6 +18,7 @@ public class LevelManager : MonoBehaviour
     public static bool CanClick;
     void Start()
     {
+        PlayerPrefs.SetInt("LastPlayedLevel", SceneManager.GetActiveScene().buildIndex + 1);
         CanClick = false;
         OnEnterance?.Invoke();
         SetBackgroundColors();
@@ -28,7 +30,7 @@ public class LevelManager : MonoBehaviour
 
     public void AddPiece(Piece piece){
         if(PiecesTrue.Contains(piece)) return;
-        PiecesTrue.Add(piece);;
+        PiecesTrue.Add(piece);
         WinCondition();
     }
     public void RemovePiece(Piece piece)

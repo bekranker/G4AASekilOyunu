@@ -16,19 +16,19 @@ public class Piece : MonoBehaviour, ITurnable
     public TurnAction turnAction;
     public bool CanTurn{get; set;}
     public IndexValues Index;
-    public readonly static List<int> AnglesZ = new List<int>
+    public readonly List<int> AnglesZ = new List<int>
     {
         0,
         90,
         180,
         270
     };
-    public readonly static List<int> AnglesY = new List<int>
+    public readonly List<int> AnglesY = new List<int>
     {
         0,
         180,
     };
-    public readonly static List<int> AnglesX = new List<int>
+    public readonly List<int> AnglesX = new List<int>
     {
         0,
         180,
@@ -71,6 +71,11 @@ public class Piece : MonoBehaviour, ITurnable
     private void TurnMe()
     {
         transform.DORotate(new Vector3(transform.rotation.x, AnglesY[Index.Y], AnglesZ[Index.Z]), 0.5f).SetUpdate(true);
+        SetCorrectPiece();
+        turnAction?.Invoke();
+    }
+    public void SetCorrectPiece()
+    {
         if(CorrectState())
         {
             _LevelManager.AddPiece(this);
@@ -79,9 +84,8 @@ public class Piece : MonoBehaviour, ITurnable
         {
             _LevelManager.RemovePiece(this);
         }
-        turnAction?.Invoke();
     }
-    private bool CorrectState()
+    public bool CorrectState()
     {
         return AnglesZ[Index.Z] == 0 && AnglesY[Index.Y] == 0 && AnglesX[Index.X] == 0 && transform.position == StartPosition;
     }

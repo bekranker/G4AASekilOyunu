@@ -112,6 +112,9 @@ public class LevelGenerator : MonoBehaviour
         List<GameObject> _pieces_ = GameObject.FindGameObjectsWithTag("Line").ToList();
         _pieces_?.ForEach((__piece__)=>{DestroyImmediate(__piece__);});
         _hexs.Clear();
+        _levelManager.Pieces.Clear();
+        _levelManager.GridScrollPieces.Clear();
+        
         _levelEnterance.AngleX = false;
         _levelEnterance.AngleZ = false;
         _levelEnterance.AngleZ = false;

@@ -9,7 +9,7 @@ public class LevelEnterance : MonoBehaviour
 {
     [SerializeField] private LevelManager _levelManager;
     public bool AngleX, AngleY, AngleZ;
-
+    private int _rand;
 
 
 
@@ -25,41 +25,41 @@ public class LevelEnterance : MonoBehaviour
 
     private void SetPieceToRandom()
     {
-        print("girdi");
-        _levelManager.Pieces.ForEach((piece) =>
+        _rand = Random.Range(1, 3);
+        for (int i = 0; i < _levelManager.Pieces.Count; i++)
         {
-            int rand = Random.Range(1, 3);
+            _rand = Random.Range(1, 3);
             if(AngleX)
             {
-                for (int i = 0; i < rand; i++)
+                for (int a = 0; i <= _rand; a++)
                 {
-                    piece.TurnMeX();
-                }
+                    _levelManager.Pieces[i].TurnMeX();
+                }        
             }
             if(AngleY)
             {
-                for (int i = 0; i < rand; i++)
+                for (int a = 0; a <= _rand; a++)
                 {
-                    piece.TurnMeY();
+                    _levelManager.Pieces[i].TurnMeY();
                 }
             }
             if(AngleZ)
             {
-                for (int i = 0; i < rand; i++)
+                for (int a = 0; a <= _rand; a++)
                 {
-                    piece.TurnMeZ();
+                    print("girdi");
+                    _levelManager.Pieces[i].TurnMeZ();
                 }
-            }
-        });
-        _levelManager.GridScrollPieces?.ForEach((gridScrollPiece)=>
+            }    
+        }
+        
+        for (int i = 0; i < _levelManager.GridScrollPieces.Count; i++)
         {
-            int index = _levelManager.GridScrollPieces.FindIndex(x => x == gridScrollPiece);
-            if(index != -1)
+            if(i != _levelManager.GridScrollPieces.Count - 1)
             {
-                gridScrollPiece.gameObject.transform.DOMove(_levelManager.GridScrollPieces[index].transform.position, .2f);
-                _levelManager.GridScrollPieces[index].transform.DOMove(gridScrollPiece.transform.position, .2f);
+                _levelManager.GridScrollPieces[i].gameObject.transform.DOMove(_levelManager.GridScrollPieces[i + 1].transform.position, .3f);
+                _levelManager.GridScrollPieces[i + 1].transform.DOMove(_levelManager.GridScrollPieces[i].transform.position, .3f).OnComplete(()=>{LevelManager.CanClick = true;});
             }
-        });
-        LevelManager.CanClick = true;
+        }
     }
 }

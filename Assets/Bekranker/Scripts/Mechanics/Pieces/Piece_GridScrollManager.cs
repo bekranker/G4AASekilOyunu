@@ -6,7 +6,7 @@ public class Piece_GridScrollManager : MonoBehaviour, ISwipe
     [HideInInspector] public bool ChangingSide;
     [HideInInspector] public Piece Piece;
     
-    void OnStart()
+    void Start()
     {
         Piece = GetComponent<Piece>();
     }
