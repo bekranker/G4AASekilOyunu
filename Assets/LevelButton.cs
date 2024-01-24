@@ -16,32 +16,34 @@ public class LevelButton : MonoBehaviour
 
     void Start()
     {
-        SetStars();
+        
         SetButtonImage();
     }
     private void SetStars()
     {
-        if(PlayerPrefs.HasKey($"Level{StarIndex}"))
+        int earnedStarCount = PlayerPrefs.GetInt($"Level{StarIndex}StarEarned");
+        print(earnedStarCount);
+        for (int i = 0; i < earnedStarCount; i++)
         {
-            if(PlayerPrefs.HasKey($"Level{StarIndex}StarEarned"))
-            {
-                int earnedStarCount = PlayerPrefs.GetInt("Level{StarIndex}StarEarned");
-                for (int i = 0; i < earnedStarCount; i++)
-                {
-                    _blacks[i].SetActive(false);
-                }
-            }
+            _blacks[i].SetActive(false);
         }
     }
     private void SetButtonImage()
     {
+        if(StarIndex == 1)
+        {
+            _buttonImage.sprite = _playedLevel;
+            return;
+        }
         if (IsMe("LastPlayedLevel"))
         {
             _buttonImage.sprite = _playedLevel;
+            SetStars();
         }
         else if(IsMe($"PassedLevel{StarIndex}"))
         {
             _buttonImage.sprite = _passedLevel;
+            SetStars();
         }
         else
         {

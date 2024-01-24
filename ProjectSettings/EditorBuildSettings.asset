@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Bekir/LevelSelection.unity
+    guid: 73b51927109ab1b488cd5f69f93f7edd
+  - enabled: 1
+    path: Assets/Scenes/Bekir/LevelGenerator.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

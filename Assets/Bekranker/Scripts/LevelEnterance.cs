@@ -47,7 +47,7 @@ public class LevelEnterance : MonoBehaviour
             {
                 for (int a = 0; a <= _rand; a++)
                 {
-                    print("girdi");
+                    print(_levelManager.Pieces[i].name);
                     _levelManager.Pieces[i].TurnMeZ();
                 }
             }    

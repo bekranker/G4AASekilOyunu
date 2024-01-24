@@ -7,7 +7,7 @@ using System;
 public class StarSliderHandler : MonoBehaviour
 {
     public static event Action<Transform> OnClick, OnDead;
-
+    public static event Action OnWin;
 
     [SerializeField] private List<Image> _stars = new List<Image>();
     public List<Transform> _starsParents = new List<Transform>();
@@ -17,11 +17,11 @@ public class StarSliderHandler : MonoBehaviour
     
 
     private float _decreaser;
-    private int _selectedIndex;
+    public int SelectedIndex;
 
     void Start()
     {
-        _selectedIndex = 0;
+        SelectedIndex = 0;
         float allStarDecreaser = _levelManager.TurnCount / 3;
         _decreaser = 1 / allStarDecreaser;
     }
@@ -35,19 +35,20 @@ public class StarSliderHandler : MonoBehaviour
     }
     public void StarHandler()
     {
-        _stars[_selectedIndex].fillAmount = (_stars[_selectedIndex].fillAmount - _decreaser >= 0) ? _stars[_selectedIndex].fillAmount - _decreaser : 0;
+        _stars[SelectedIndex].fillAmount = (_stars[SelectedIndex].fillAmount - _decreaser >= 0) ? _stars[SelectedIndex].fillAmount - _decreaser : 0;
         StarSelector();
     }
     private void StarSelector()
     {
-        if (_stars[_selectedIndex].fillAmount - _decreaser < 0)
+        if (_stars[SelectedIndex].fillAmount - _decreaser < 0)
         {
-            OnDead?.Invoke(_stars[_selectedIndex].transform);
-            _filledStars.Remove(_stars[_selectedIndex]);
-            _unFilledStars.Add(_stars[_selectedIndex]);
-            _selectedIndex = (_selectedIndex + 1 >= _stars.Count) ? 0 : _selectedIndex + 1;
+            OnDead?.Invoke(_stars[SelectedIndex].transform);
+            _filledStars.Remove(_stars[SelectedIndex]);
+            _unFilledStars.Add(_stars[SelectedIndex]);
+            SelectedIndex = (SelectedIndex + 1 >= _stars.Count) ? 0 : SelectedIndex + 1;
+            OnWin?.Invoke();
             return;
         }
-        OnClick?.Invoke(_stars[_selectedIndex].transform);
+        OnClick?.Invoke(_stars[SelectedIndex].transform);
     }
 }
