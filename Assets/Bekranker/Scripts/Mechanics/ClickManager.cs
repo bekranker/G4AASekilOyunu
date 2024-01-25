@@ -94,16 +94,12 @@ public class ClickManager : MonoBehaviour
         switch (_eDirections)
         {
             case Directions.Z:
-                _buttonText.text = "Flip X";
+                _buttonText.text = "Flip Y";
                 _eDirections = Directions.Y;
                 break; 
-            case Directions.X:
-                _buttonText.text = "Flip Y";
-                _eDirections = Directions.Z;
-                break;
             case Directions.Y:
                 _buttonText.text = "Flip Z";
-                _eDirections = Directions.X;
+                _eDirections = Directions.Z;
                 break;
             default:
                 break;

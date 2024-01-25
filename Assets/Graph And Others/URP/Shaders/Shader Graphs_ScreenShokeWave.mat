@@ -63,5 +63,5 @@ Material:
     - _Strength: -0.29
     - _WaveDistanceFromCenter: 1
     m_Colors:
-    - _SquarePosition: {r: 0.29615733, g: 0.90663856, b: 0, a: 0}
+    - _SquarePosition: {r: 0.31523156, g: 0.95117724, b: 0, a: 0}
   m_BuildTextureStacks: []
