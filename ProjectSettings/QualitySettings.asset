@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 5
+  m_CurrentQuality: 2
   m_QualitySettings:
   - serializedVersion: 3
     name: Very Low
@@ -20,7 +20,10 @@ QualitySettings:
     shadowmaskMode: 0
     skinWeights: 1
     globalTextureMipmapLimit: 1
-    textureMipmapLimitSettings: []
+    textureMipmapLimitSettings:
+    - serializedVersion: 0
+      limitBiasMode: 0
+      limitBias: 0
     anisotropicTextures: 0
     antiAliasing: 0
     softParticles: 0
@@ -69,7 +72,10 @@ QualitySettings:
     shadowmaskMode: 0
     skinWeights: 2
     globalTextureMipmapLimit: 0
-    textureMipmapLimitSettings: []
+    textureMipmapLimitSettings:
+    - serializedVersion: 0
+      limitBiasMode: 0
+      limitBias: 0
     anisotropicTextures: 0
     antiAliasing: 0
     softParticles: 0
@@ -118,7 +124,10 @@ QualitySettings:
     shadowmaskMode: 0
     skinWeights: 2
     globalTextureMipmapLimit: 0
-    textureMipmapLimitSettings: []
+    textureMipmapLimitSettings:
+    - serializedVersion: 0
+      limitBiasMode: 0
+      limitBias: 0
     anisotropicTextures: 1
     antiAliasing: 0
     softParticles: 0
@@ -131,18 +140,18 @@ QualitySettings:
     lodBias: 0.7
     maximumLODLevel: 0
     enableLODCrossFade: 1
-    streamingMipmapsActive: 0
+    streamingMipmapsActive: 1
     streamingMipmapsAddAllCameras: 1
     streamingMipmapsMemoryBudget: 512
     streamingMipmapsRenderersPerFrame: 512
     streamingMipmapsMaxLevelReduction: 2
     streamingMipmapsMaxFileIORequests: 1024
-    particleRaycastBudget: 64
+    particleRaycastBudget: 32
     asyncUploadTimeSlice: 2
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: 10eb1ebbeb8d6664cbe1f3418b6371d7, type: 2}
     terrainQualityOverrides: 0
     terrainPixelError: 1
     terrainDetailDensityScale: 1
@@ -167,7 +176,10 @@ QualitySettings:
     shadowmaskMode: 1
     skinWeights: 2
     globalTextureMipmapLimit: 0
-    textureMipmapLimitSettings: []
+    textureMipmapLimitSettings:
+    - serializedVersion: 0
+      limitBiasMode: 0
+      limitBias: 0
     anisotropicTextures: 1
     antiAliasing: 0
     softParticles: 0
@@ -216,7 +228,10 @@ QualitySettings:
     shadowmaskMode: 1
     skinWeights: 4
     globalTextureMipmapLimit: 0
-    textureMipmapLimitSettings: []
+    textureMipmapLimitSettings:
+    - serializedVersion: 0
+      limitBiasMode: 0
+      limitBias: 0
     anisotropicTextures: 2
     antiAliasing: 2
     softParticles: 1
@@ -265,7 +280,10 @@ QualitySettings:
     shadowmaskMode: 1
     skinWeights: 255
     globalTextureMipmapLimit: 0
-    textureMipmapLimitSettings: []
+    textureMipmapLimitSettings:
+    - serializedVersion: 0
+      limitBiasMode: 0
+      limitBias: 0
     anisotropicTextures: 2
     antiAliasing: 0
     softParticles: 1
@@ -289,7 +307,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 11400000, guid: cea3dcc3c31bd4f4985208795ccd4a11, type: 2}
+    customRenderPipeline: {fileID: 11400000, guid: 10eb1ebbeb8d6664cbe1f3418b6371d7, type: 2}
     terrainQualityOverrides: 0
     terrainPixelError: 1
     terrainDetailDensityScale: 1
@@ -300,7 +318,8 @@ QualitySettings:
     terrainFadeLength: 5
     terrainMaxTrees: 50
     excludedTargetPlatforms: []
-  m_TextureMipmapLimitGroupNames: []
+  m_TextureMipmapLimitGroupNames:
+  - New Group
   m_PerPlatformDefaultQuality:
     Android: 2
     GameCoreScarlett: 5
@@ -309,10 +328,10 @@ QualitySettings:
     Nintendo Switch: 5
     PS4: 5
     PS5: 5
-    Server: 0
+    Server: 2
     Stadia: 5
-    Standalone: 5
-    WebGL: 3
+    Standalone: 2
+    WebGL: 2
     Windows Store Apps: 5
     XboxOne: 5
     iPhone: 2

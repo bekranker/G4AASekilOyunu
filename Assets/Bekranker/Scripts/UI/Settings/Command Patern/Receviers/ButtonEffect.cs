@@ -2,6 +2,8 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using System;
+using Action = System.Action;
 
 public class ButtonEffect : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -14,8 +16,7 @@ public class ButtonEffect : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     };
     private int _index;
 
-    public delegate void UpAction();
-    public event UpAction OnUp, OnUpFinished;
+    public event Action OnUp, OnUpFinished;
     private Transform _transform { get; set; }
     private Sequence _sequence { get; set; }
     public bool _canClick { get; set; }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LevelButton : MonoBehaviour
 {
@@ -13,10 +15,25 @@ public class LevelButton : MonoBehaviour
     [SerializeField] private Sprite _passedLevel;
     [SerializeField] private Image _buttonImage;
     [SerializeField] private ButtonEffect _buttonEffect;
+    [SerializeField] private TMP_Text _levelText;
+
+
+
+
+
+    void OnEnable()
+    {
+        _buttonEffect.OnUp += SetLevelIndex;
+    }
+    void OnDisable()
+    {
+        _buttonEffect.OnUp -= SetLevelIndex; 
+    }
+
 
     void Start()
     {
-        
+        _levelText.text = StarIndex.ToString();
         SetButtonImage();
     }
     private void SetStars()
@@ -47,11 +64,13 @@ public class LevelButton : MonoBehaviour
         }
         else
         {
+            _levelText.enabled = false;
             _buttonImage.sprite = _lockedImage;
             _starsParent.gameObject.SetActive(false);
             _buttonEffect.enabled = false;
         }
     }
+    private void SetLevelIndex() => SceneManager.LoadScene(StarIndex);
     private bool IsMe(string saveName)
     {
         return PlayerPrefs.GetInt(saveName, -1) == StarIndex;
